@@ -1,0 +1,25 @@
+* 0.07 - 24 Nov 2006
+
+  * Don't use Carp without actually loading it.
+
+* 0.06 - 30 Jun 2006
+
+  * Really fix signatures.
+
+* 0.05 - 5 Jun 2006
+
+  * Fix signatures.
+
+* 0.04 - 11 Apr 2006
+
+  * Delay loading Pod::Simple::Text.
+
+* 0.03 - 27 Dec 2005
+
+  * Forgot to bundle Command::Help.
+
+* 0.02 - 25 Dec 2005
+
+  * Factored out Help system from SVK
+  * Factored out more command base stuff from SVK
+  (Thanks to Alex Vandiver)
