@@ -1,5 +1,5 @@
 package App::CLI;
-our $VERSION = 0.10;
+our $VERSION = 0.01;
 use strict;
 use warnings;
 
@@ -29,7 +29,9 @@ App::CLI - Dispatcher module for command line interface programs
 
 =head1 DESCRIPTION
 
-
+C<App::CLI> dispatches CLI (command line interface) based commands
+into command classes.  It also supports subcommand and per-command
+options.
 
 =cut
 
@@ -121,6 +123,10 @@ sub commands {
     $dir =~ s/\.pm$//;
     return sort map { ($_) = m{^\Q$dir\E/(.*)\.pm}; lc($_) } glob("$dir/*.pm");
 }
+
+=head1 TODO
+
+More documentation
 
 =head1 SEE ALSO
 
