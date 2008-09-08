@@ -1,3 +1,7 @@
+* 0.04 - 11 Apr 2006
+
+  * Delay loading Pod::Simple::Text.
+
 * 0.03 - 27 Dec 2005
 
   * Forgot to bundle Command::Help.

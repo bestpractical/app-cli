@@ -10,7 +10,8 @@ version_from	('lib/App/CLI.pm');
 
 requires(
     'Locale::Maketext::Simple' => 0,
-    'Getopt::Long'             => '2.34',
+    'Getopt::Long'             => '2.35',
+    'Pod::Simple::Text'        => 0,
 );
 
 include('ExtUtils::AutoInstall');

@@ -1,7 +1,6 @@
 package App::CLI::Command;
 use strict;
 use warnings;
-use Pod::Simple::Text;
 use Locale::Maketext::Simple;
 
 =head1 NAME
@@ -107,6 +106,7 @@ sub usage {
     my ($self, $want_detail) = @_;
     my $fname = $self->filename;
     my($cmd) = $fname =~ m{\W(\w+)\.pm$};
+    require Pod::Simple::Text;
     my $parser = Pod::Simple::Text->new;
     my $buf;
     $parser->output_string(\$buf);
@@ -180,7 +180,7 @@ Chia-liang Kao E<lt>clkao@clkao.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2005 by Chia-liang Kao E<lt>clkao@clkao.orgE<gt>.
+Copyright 2005-2006 by Chia-liang Kao E<lt>clkao@clkao.orgE<gt>.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
