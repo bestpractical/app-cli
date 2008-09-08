@@ -4,6 +4,7 @@ use warnings;
 use base qw/App::CLI::Command/;
 use File::Find qw(find);
 use Locale::Maketext::Simple;
+use Pod::Simple::Text;
 
 sub run {
     my $self = shift;
@@ -20,12 +21,13 @@ sub run {
         }
         elsif (my $file = $self->_find_topic($topic)) {
             open my $fh, '<:utf8', $file or die $!;
+            require Pod::Simple::Text;
             my $parser = Pod::Simple::Text->new;
             my $buf;
             $parser->output_string(\$buf);
             $parser->parse_file($fh);
 
-            $buf =~ s/^NAME\s+(.*?)::Help::\S+ - (.+)\s+DESCRIPTION/    $1:/;
+            $buf =~ s/^NAME\s+(.*?)::Help::\S+ - (.+)\s+DESCRIPTION/    $2:/;
             print $self->loc_text($buf);
         }
         else {
@@ -37,7 +39,7 @@ sub run {
 
 sub help_base {
     my $self = shift;
-    return ref($self->app)."::Help";
+    return $self->app."::Help";
 }
 
 my ($inc, @prefix);
