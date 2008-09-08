@@ -1,5 +1,5 @@
 package App::CLI;
-our $VERSION = 0.04;
+our $VERSION = 0.07;
 use strict;
 use warnings;
 
@@ -44,7 +44,6 @@ use constant options => ();
 sub new {
     my $class = shift;
     my $self = bless {}, $class;
-    Carp::cluck if ref($_[0]);
     %$self = @_;
     return $self;
 }

@@ -1,3 +1,15 @@
+* 0.07 - 24 Nov 2006
+
+  * Don't use Carp without actually loading it.
+
+* 0.06 - 30 Jun 2006
+
+  * Really fix signatures.
+
+* 0.05 - 5 Jun 2006
+
+  * Fix signatures.
+
 * 0.04 - 11 Apr 2006
 
   * Delay loading Pod::Simple::Text.

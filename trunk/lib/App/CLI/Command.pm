@@ -2,6 +2,7 @@ package App::CLI::Command;
 use strict;
 use warnings;
 use Locale::Maketext::Simple;
+use Carp ();
 
 =head1 NAME
 
