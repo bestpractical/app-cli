@@ -1,3 +1,7 @@
+* 0.03 - 27 Dec 2005
+
+  * Forgot to bundle Command::Help.
+
 * 0.02 - 25 Dec 2005
 
   * Factored out Help system from SVK
