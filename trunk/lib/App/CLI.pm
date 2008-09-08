@@ -1,5 +1,5 @@
 package App::CLI;
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 use strict;
 use warnings;
 
@@ -107,7 +107,9 @@ sub get_cmd {
 	warn $@ if $@ and exists $INC{$file};
 	die $class->error_cmd;
     }
-    $pkg->new (@arg);
+    $cmd = $pkg->new (@arg);
+    $cmd->app ($class);
+    return $cmd;
 }
 
 sub _opt_map {
@@ -118,10 +120,17 @@ sub _opt_map {
 sub commands {
     my $class = shift;
     $class =~ s{::}{/}g;
-    my @cmd;
     my $dir = $INC{$class.'.pm'};
     $dir =~ s/\.pm$//;
-    return sort map { ($_) = m{^\Q$dir\E/(.*)\.pm}; lc($_) } glob("$dir/*.pm");
+    return sort map { ($_) = m{^\Q$dir\E/(.*)\.pm}; lc($_) } $class->files;
+}
+
+sub files {
+    my $class = shift;
+    $class =~ s{::}{/}g;
+    my $dir = $INC{$class.'.pm'};
+    $dir =~ s/\.pm$//;
+    return sort glob("$dir/*.pm");
 }
 
 =head1 TODO

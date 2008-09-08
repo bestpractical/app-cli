@@ -9,7 +9,8 @@ license		('perl');
 version_from	('lib/App/CLI.pm');
 
 requires(
-        'Getopt::Long'          => '2.34',
+    'Locale::Maketext::Simple' => 0,
+    'Getopt::Long'             => '2.34',
 );
 
 include('ExtUtils::AutoInstall');
