@@ -101,8 +101,9 @@ sub get_cmd {
     my $pkg = join('::', $class->command_class, $class->_cmd_map ($cmd));
     my $file = "$pkg.pm";
     $file =~ s!::!/!g;
+    eval {require $file; };
 
-    unless (eval {require $file; 1} and $pkg->can('run')) {
+    unless ($pkg->can('run')) {
 	warn $@ if $@ and exists $INC{$file};
 	die $class->error_cmd;
     }
