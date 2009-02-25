@@ -1,0 +1,46 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.55.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 7fd9bee22194a446efee9479819cb1e2756f4525 Changes
+SHA1 8d79441e3301a43c60e88f19bebb9779cfda61fc MANIFEST
+SHA1 8e6b388a9c7135b46f8d5cec0f7de3c90b5cdaa4 META.yml
+SHA1 f3071db6309f9d0a01a199b6c62962d15a373087 Makefile.PL
+SHA1 603bb9de29fb8cba7f13409c546750972eff645d inc/Module/AutoInstall.pm
+SHA1 ae018c4565c1277089ca8f1b28f888d95430cb7f inc/Module/Install.pm
+SHA1 0a6f29536bedea3bb94744a7d43ffe39da7e4819 inc/Module/Install/AutoInstall.pm
+SHA1 4552acdfca8b78f8015d8449e1325616259095f5 inc/Module/Install/Base.pm
+SHA1 7fb663fff161fb45882b52edd62857bf15359658 inc/Module/Install/Can.pm
+SHA1 8b1d3db746faa6faf2d967a48d3812ec1f44b4c6 inc/Module/Install/Fetch.pm
+SHA1 d7ce736cdd05d5156d379ef39cca93beeeeba828 inc/Module/Install/Include.pm
+SHA1 9f6beaa2f4749ceb5dd0c9b0c647d0f3289c7b46 inc/Module/Install/Makefile.pm
+SHA1 7ad1da4fff7a1e7a634c9d734111c8292be08884 inc/Module/Install/Metadata.pm
+SHA1 e9aa83f3e8b16ccfce544a90a57b63b70a497759 inc/Module/Install/Win32.pm
+SHA1 ade2ac0b0246d4d8e28fa46942e53f6925abda46 inc/Module/Install/WriteAll.pm
+SHA1 ba3a180b4915e0060ced5135e2d6441e766823e0 lib/App/CLI.pm
+SHA1 afa50c5c799445a48385ce9d6f2589bb8d90d00d lib/App/CLI/Command.pm
+SHA1 bbda8c25ee4e1a704cb574e52b1db4e85e008c16 lib/App/CLI/Command/Help.pm
+SHA1 2e2fae52c7271120faa67828599c8e15c6ee52f6 t/1basic.t
+SHA1 bdf8cf34a6036e32739dc19cb775db69952184cb t/lib/CLITest.pm
+SHA1 d8d9e73b090de778d7a046c6cc4ad01b3dc52612 t/lib/MyApp.pm
+SHA1 d54e822cc998c53e44b74995affadd86c14a38a3 t/lib/MyApp/Help.pm
+SHA1 a4d7d62cb74ddda64f20836e7ec3ff67215d9f04 t/lib/MyApp/Test.pm
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkmlsukACgkQMflWJZZAbqAEzQCfWTRRe0zrMdFUUM/8Q0qJ5+ZF
+30IAn0KN4onPSfAd5NseQM6KOGfY81n0
+=OGaQ
+-----END PGP SIGNATURE-----

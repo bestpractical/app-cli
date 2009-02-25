@@ -1,3 +1,7 @@
+* 0.08 - 25 Feb 2009
+
+  * Allow commands to be provided as inner packages
+
 * 0.07 - 24 Nov 2006
 
   * Don't use Carp without actually loading it.
