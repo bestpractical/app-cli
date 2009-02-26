@@ -14,7 +14,6 @@ requires(
     'Pod::Simple::Text'        => 0,
 );
 
-include('ExtUtils::AutoInstall');
 auto_install();
 
 WriteAll( sign => 1 );
