@@ -1,3 +1,7 @@
+0.09 - 17 Oct 2010
+
+  * Fix the command pattern used in help.
+
 * 0.08 - 25 Feb 2009
 
   * Allow commands to be provided as inner packages
