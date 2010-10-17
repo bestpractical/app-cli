@@ -99,16 +99,19 @@ sub get_cmd {
     die $class->error_cmd
 	unless $cmd && $cmd =~ m/^[?a-z]+$/;
     my $pkg = join('::', $class->command_class, $class->_cmd_map ($cmd));
+
     my $file = "$pkg.pm";
     $file =~ s!::!/!g;
     eval {require $file; };
 
     unless ($pkg->can('run')) {
-	warn $@ if $@ and exists $INC{$file};
-	die $class->error_cmd;
+        warn $@ if $@ and exists $INC{$file};
+        die $class->error_cmd;
     }
+
     $cmd = $pkg->new (@arg);
     $cmd->app ($class);
+
     return $cmd;
 }
 
