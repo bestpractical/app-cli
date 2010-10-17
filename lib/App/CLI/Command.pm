@@ -106,7 +106,7 @@ section is displayed as well.
 sub usage {
     my ($self, $want_detail) = @_;
     my $fname = $self->filename;
-    my($cmd) = $fname =~ m{\W(\w+)\.pm$};
+    my ($cmd) = $fname =~ m{\W(\w+)\.pm$};
     require Pod::Simple::Text;
     my $parser = Pod::Simple::Text->new;
     my $buf;
@@ -162,9 +162,9 @@ Return the filename for the command module.
 sub filename {
     my $self = shift;
     my $fname = ref($self);
-    $fname =~ s{::[a-z]+}{}; # subcommand
+    $fname =~ s{::[a-z]+$}{}; # subcommand
     $fname =~ s{::}{/}g;
-    $INC{"$fname.pm"}
+    return $INC{"$fname.pm"};
 }
 
 =head1 TODO
