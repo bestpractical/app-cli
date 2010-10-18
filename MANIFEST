@@ -22,3 +22,4 @@ t/lib/CLITest.pm
 t/lib/MyApp.pm
 t/lib/MyApp/Help.pm
 t/lib/MyApp/Test.pm
+MANIFEST.SKIP
