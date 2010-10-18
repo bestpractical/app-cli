@@ -6,6 +6,35 @@ use File::Find qw(find);
 use Locale::Maketext::Simple;
 use Pod::Simple::Text;
 
+=head1 NAME
+
+App::CLI::Command::Help
+
+=head1 DESCRIPTION
+
+Your command class should be capitalized.
+
+To add help message , you just add pod in command class:
+
+    package YourApp::Command::Foo;
+
+
+    =head1 NAME
+
+    YourApp::Command::Foo - execute foo
+
+    =head1 DESCRIPTION
+
+    blah blah
+
+    =head1 USAGE
+
+    ....
+
+    =cut
+
+=cut
+
 sub run {
     my $self = shift;
     my @topics = @_;
