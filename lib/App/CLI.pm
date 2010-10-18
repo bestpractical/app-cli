@@ -9,23 +9,38 @@ App::CLI - Dispatcher module for command line interface programs
 
 =head1 SYNOPSIS
 
-  package MyApp;
-  use base 'App::CLI';
+    package MyApp;
+    use base 'App::CLI';
 
-  package main;
+    package main;
 
-  MyApp->dispatch;
+    MyApp->dispatch;
 
-  package MyApp::Help;
-  use base 'App::CLI::Command';
+    package MyApp::List;
+    use base qw(App::CLI::Command);
 
-  sub options {
-    ('verbose' => 'verbose');
-  }
+    sub run {
+        my ($self, @args ) = @_;
 
-  sub run {
-    my ($self, $arg) = @_;
-  }
+
+    }
+
+    package MyApp::Help;
+    use base 'App::CLI::Command';
+
+    sub options { (
+        'verbose' => 'verbose',
+        'n|name=s'  => 'name'
+    }
+
+    sub run {
+        my ( $self, $arg ) = @_;
+
+        print "verbose" if $self->{verbose};
+
+        my $name = $self->{name};
+
+    }
 
 =head1 DESCRIPTION
 
@@ -147,6 +162,7 @@ L<App::CLI::Command>
 =head1 AUTHORS
 
 Chia-liang Kao E<lt>clkao@clkao.orgE<gt>
+Cornelius Lin  E<lt>cornelius.howl@gmail.comE<gt>
 
 =head1 COPYRIGHT
 
