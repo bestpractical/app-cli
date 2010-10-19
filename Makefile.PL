@@ -4,6 +4,7 @@ use inc::Module::Install;
 
 name		('App-CLI');
 author		('Chia-liang Kao <clkao@clkao.org>');
+# author		('Cornelius <cornelius.howl@gmail.com>');
 abstract_from	('lib/App/CLI.pm');
 license		('perl');
 version_from	('lib/App/CLI.pm');
@@ -16,4 +17,5 @@ requires(
 
 auto_install();
 
-WriteAll( sign => 1 );
+# WriteAll( sign => 1 );
+WriteAll( );

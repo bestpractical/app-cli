@@ -10,23 +10,30 @@ App::CLI::Command - Base class for App::CLI commands
 
 =head1 SYNOPSIS
 
-  package MyApp;
-  use base 'App::CLI';
+    package MyApp;
+    use base 'App::CLI';
 
-  package main;
+    package main;
 
-  MyApp->dispatch;
+    MyApp->dispatch;
 
-  package MyApp::Help;
-  use base 'App::CLI::Command';
 
-  sub options {
-    ('verbose' => 'verbose');
-  }
+    package MyApp::Help;
+    use base 'App::CLI::Command';
 
-  sub run {
-    my ($self, $arg) = @_;
-  }
+    sub options { (
+        'verbose' => 'verbose',
+        'n|name=s'  => 'name'
+    }
+
+    sub run {
+        my ( $self, $arg ) = @_;
+
+        print "verbose" if $self->{verbose};
+
+        my $name = $self->{name};
+
+    }
 
 =head1 DESCRIPTION
 
@@ -47,6 +54,12 @@ sub command_options {
     ( (map { $_ => $_ } $_[0]->subcommands),
       $_[0]->options );
 }
+
+# XXX:
+sub _mk_completion_sh { }
+sub _mk_completion_zsh { }
+
+
 
 sub run_command {
     my $self = shift;
