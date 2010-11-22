@@ -84,6 +84,7 @@ sub cascading {
   for ($self->subcommands) {
     no strict "refs";
     if (ucfirst($ARGV[0]) eq $_ && exists ${ref($self)."::"}{$_."::"}) {
+      shift @ARGV;
       my %data = %{$self};
       return bless {%data}, ref($self)."::".ucfirst($_);
     }

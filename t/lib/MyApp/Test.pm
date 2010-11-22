@@ -9,8 +9,9 @@ use CLITest;
 
 sub run {
     my $self = shift;
-    if ($self->cascading) {
-      $self->cascading->run_command;
+    my $cas = $self->cascading;
+    if ($cas) {
+      $cas->run_command;
     } else {
       cliack($self->{verbose} ? 'v' : '', @_);
     }
