@@ -49,9 +49,6 @@ is_deeply ([MyApp->commands],
 {
     local *ARGV = ["test", "cascading"];
     MyApp->dispatch;
-    use Data::Dumper;
-    my $res = clicheck;
-    print STDERR Dumper $res;
-    is_deeply ($res, [qw(MyApp::Test::Cascading MyApp::Test::Cascading::run)],
+    is_deeply (clicheck, [qw(MyApp::Test::Cascading MyApp::Test::Cascading::run)],
                'cascading subcommand');
 }
