@@ -74,9 +74,21 @@ sub subcommand {
 	no strict 'refs';
 	if (exists ${ref($self).'::'}{$_.'::'}) {
 	    bless ($self, (ref($self)."::$_"));
-	    last;
+            last;
 	}
     }
+}
+
+sub cascading {
+  my $self = shift;
+  for ($self->subcommands) {
+    no strict "refs";
+    if (ucfirst($ARGV[0]) eq $_ && exists ${ref($self)."::"}{$_."::"}) {
+      my %data = %{$self};
+      return bless {%data}, ref($self)."::".ucfirst($_);
+    }
+  }
+  return undef;
 }
 
 sub app {
