@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
-use Test::More tests => 9;
+use Test::More tests => 10;
 use lib qw(t/lib);
 use CLITest;
 
@@ -51,4 +51,11 @@ is_deeply ([MyApp->commands],
     MyApp->dispatch;
     is_deeply (clicheck, [qw(MyApp::Test::Cascading MyApp::Test::Cascading::run)],
                'cascading subcommand');
+}
+
+{
+    local *ARGV = [qw(test cascading infinite)];
+    MyApp->dispatch;
+    is_deeply (clicheck, [qw(MyApp::Test::Cascading::Infinite MyApp::Test::Cascading::Infinite::run)],
+               'cascading more subcommands');
 }
