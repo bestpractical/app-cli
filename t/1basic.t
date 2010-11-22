@@ -59,3 +59,4 @@ is_deeply ([MyApp->commands],
     is_deeply (clicheck, [qw(MyApp::Test::Cascading::Infinite MyApp::Test::Cascading::Infinite::run)],
                'cascading more subcommands');
 }
+

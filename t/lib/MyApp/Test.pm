@@ -26,14 +26,30 @@ sub run {
     cliack($self->{verbose} ? 'v' : '', 'hate', @_);
 }
 
+package MyApp::Test::Cascading::Infinite;
+use base qw(App::CLI::Command);
+use CLITest;
+
+sub run {
+  my $self = shift;
+  cliack();
+}
+
 package MyApp::Test::Cascading;
 use base qw(App::CLI::Command);
 use CLITest;
 use Data::Dumper;
 
+use constant subcommands => qw(Infinite);
+
 sub run {
   my $self = shift;
-  cliack();
+  my $cas = $self->cascading;
+  if ($cas) {
+    $cas->run_command;
+  } else {
+    cliack;
+  }
 }
 
 
