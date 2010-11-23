@@ -10,30 +10,25 @@ App::CLI::Command - Base class for App::CLI commands
 
 =head1 SYNOPSIS
 
-    package MyApp;
-    use base 'App::CLI';
+    package MyApp::List;
+    use base qw(App::CLI::Command);
 
-    package main;
-
-    MyApp->dispatch;
-
-
-    package MyApp::Help;
-    use base 'App::CLI::Command';
-
-    sub options { (
-        'verbose' => 'verbose',
-        'n|name=s'  => 'name'
-    }
+    use constant options => (
+        'verbose'   => 'verbose',
+        'n|name=s'  => 'name',
+    );
 
     sub run {
         my ( $self, $arg ) = @_;
 
         print "verbose" if $self->{verbose};
 
-        my $name = $self->{name};
+        my $name = $self->{name}; # get arg following long option --name
 
+        # any thing your want this command do
     }
+
+    # See App::CLI for information of how to invoke (sub)command.
 
 =head1 DESCRIPTION
 
@@ -69,13 +64,13 @@ sub subcommand {
     my @cmd = $self->subcommands;
     @cmd = values %{{$self->options}} if @cmd && $cmd[0] eq '*';
     for (grep {$self->{$_}} @cmd) {
-	no strict 'refs';
-	if (exists ${ref($self).'::'}{$_.'::'}) {
+      no strict 'refs';
+      if (exists ${ref($self).'::'}{$_.'::'}) {
 	    bless ($self, (ref($self)."::$_"));
-            last;
-	}
+        last;
+      }
     }
-}
+)
 
 sub cascading {
   my $self = shift;
@@ -198,6 +193,7 @@ More documentation
 =head1 SEE ALSO
 
 L<App::CLI>
+L<Getopt::Long>
 
 =head1 AUTHORS
 

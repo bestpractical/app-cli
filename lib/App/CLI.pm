@@ -10,36 +10,73 @@ App::CLI - Dispatcher module for command line interface programs
 =head1 SYNOPSIS
 
     package MyApp;
-    use base 'App::CLI';
+    use base 'App::CLI';        # the DISPATCHER of your App
+                                # it's not necessary putting the dispather on the top level of your App
 
     package main;
 
-    MyApp->dispatch;
+    MyApp->dispatch;            # call dispather in where you want
 
     package MyApp::List;
+    use base qw(App::CLI::Command); # any (SUB)COMMAND of your App
+
+    use constant options => qw( 
+        "h|help"   => "help",
+        "verbose"  => "verbose",
+        'n|name=s'  => 'name',
+    );
+
+    use constant subcommands => qw(User Nickname); # if you want subcommands
+
+    sub run {
+        my ($self, @args) = @_;
+
+        print "verbose" if $self->{verbose};
+        my $name = $self->{name}; # get arg following long option --name
+
+        if ($self->{help}) {
+            # if $ myapp list --help or $ $ myapp list -h
+            # just only output PODs
+        } else {
+            $subcmd = $self->cascading;
+            if ($subcmd) {
+                $subcmd->run_command; # if you want to invoke MyApp::List::User or MyApp::List::Nickname
+            } else {
+                # do something that without subcommand
+                # or die as below
+                $self->error_cmd;
+            }
+        }
+    }
+
+    package MyApp::List::User;
     use base qw(App::CLI::Command);
 
     sub run {
-        my ($self, @args ) = @_;
-
-
+        my ($self,@args) = @_;
+        # code for listing user
     }
 
-    package MyApp::Help;
-    use base 'App::CLI::Command';
-
-    sub options { (
-        'verbose' => 'verbose',
-        'n|name=s'  => 'name'
-    }
+    pakcage MyApp::List::Nickname;
+    use base qw(App::CLI::Command);
 
     sub run {
-        my ( $self, $arg ) = @_;
+        my ($self,@args) = @_;
+        # code for listing nickname
+    }
 
-        print "verbose" if $self->{verbose};
 
-        my $name = $self->{name};
+    package MyApp::Help;
+    use base 'App::CLI::Command::Help';
 
+    use constant options => (
+        'verbose' => 'verbose',
+    );
+
+    sub run {
+        my ($self, @arg) = @_;
+        # do something
+        $self->SUPER(@_); # App::CLI::Command::Help would output PDOs of each command
     }
 
 =head1 DESCRIPTION
@@ -156,6 +193,7 @@ More documentation
 =head1 SEE ALSO
 
 L<App::CLI::Command>
+L<Getopt::Long>
 
 =head1 AUTHORS
 

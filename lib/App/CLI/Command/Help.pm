@@ -10,6 +10,17 @@ use Pod::Simple::Text;
 
 App::CLI::Command::Help
 
+=head1 SYNOPSIS
+
+    package MyApp::Help;
+    use base qw(App::CLI::Command::Help);
+
+    sub run {
+        my ($self, @args) = @_;
+        # preprocess
+        $self->SUPER(@_);       # App::CLI::Command::Help would output PODs of each command
+    }
+
 =head1 DESCRIPTION
 
 Your command class should be capitalized.
