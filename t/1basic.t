@@ -61,8 +61,8 @@ is_deeply ([MyApp->commands],
 }
 
 {
-    local *ARGV = [qw(test cascading infinite subcommands --name shelling)];
+    local *ARGV = [qw(test cascading infinite subcommands --name shelling --help)];
     MyApp->dispatch;
-    is_deeply(clicheck, [qw(MyApp::Test::Cascading::Infinite::Subcommands MyApp::Test::Cascading::Infinite::Subcommands::run), "shelling"],
+    is_deeply(clicheck, [qw(MyApp::Test::Cascading::Infinite::Subcommands MyApp::Test::Cascading::Infinite::Subcommands::run), "shelling", "help"],
               'cascading with options');
 }

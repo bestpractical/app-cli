@@ -5,7 +5,6 @@ use base 'MyApp';
 use constant subcommands => qw(hate Cascading);
 use constant options => (
     'v|verbose' => 'verbose',
-    "name=s"    => "name",
 );
 use CLITest;
 
@@ -33,11 +32,12 @@ use CLITest;
 
 use constant options => (
     "h|help" => "help",
+    "name=s" => "name",
 );
 
 sub run {
   my $self = shift;
-  cliack($self->{name});
+  cliack($self->{name}, $self->{help} ? "help" : "");
 }
 
 package MyApp::Test::Cascading::Infinite;
