@@ -199,6 +199,7 @@ L<Getopt::Long>
 
 Chia-liang Kao E<lt>clkao@clkao.orgE<gt>
 Cornelius Lin  E<lt>cornelius.howl@gmail.comE<gt>
+shelling       E<lt>navyblueshellingford@gmail.comE<gt>
 
 =head1 COPYRIGHT
 
