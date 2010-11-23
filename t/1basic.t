@@ -40,6 +40,8 @@ is_deeply ([MyApp->commands],
 }
 
 {
+    # this kind of subcommand should be deprecated
+    # because it makes people confused which is option and which is subcommand
     local *ARGV = ['test', '--hate', 'arg', '--verbose'];
     MyApp->dispatch;
     is_deeply (clicheck, [qw(MyApp::Test::hate MyApp::Test::hate::run), 'v', 'hate', 'arg'],
