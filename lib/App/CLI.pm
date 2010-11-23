@@ -38,9 +38,8 @@ App::CLI - Dispatcher module for command line interface programs
             # if $ myapp list --help or $ $ myapp list -h
             # just only output PODs
         } else {
-            $subcmd = $self->cascading;
-            if ($subcmd) {
-                $subcmd->run_command; # if you want to invoke MyApp::List::User or MyApp::List::Nickname
+            if ($self->cascadable) {
+                $self->cascading->run_command; # if you want to invoke MyApp::List::User or MyApp::List::Nickname
             } else {
                 # do something that without subcommand
                 # or die as below

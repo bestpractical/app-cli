@@ -71,6 +71,12 @@ sub subcommand {
     }
 }
 
+=head3 cascading()
+
+return instance of subcommand invoked if it was listed in your constant subcommands.
+
+=cut
+
 sub cascading {
   my $self = shift;
   if ($self->cascadable) {
@@ -80,6 +86,14 @@ sub cascading {
   }
   return undef;
 }
+
+=head3 cascadable()
+
+return 1 if the subcommand invoked is in you constant subcommands
+
+otherwise, return undef
+
+=cut
 
 sub cascadable {
   my $self = shift;
