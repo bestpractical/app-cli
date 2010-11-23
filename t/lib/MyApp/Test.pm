@@ -11,9 +11,8 @@ use CLITest;
 
 sub run {
     my $self = shift;
-    my $cas = $self->cascading;
-    if ($cas) {
-      $cas->run_command;
+    if ($self->cascadable) {
+      $self->cascading->run_command;
     } else {
       cliack($self->{verbose} ? 'v' : '', @_);
     }
@@ -49,9 +48,8 @@ use constant subcommands => qw(Subcommands);
 
 sub run {
   my $self = shift;
-  my $cas = $self->cascading;
-  if ($cas) {
-    $cas->run_command;
+  if ($self->cascadable) {
+    $self->cascading->run_command;
   } else {
     cliack;
   }
@@ -65,9 +63,8 @@ use constant subcommands => qw(Infinite);
 
 sub run {
   my $self = shift;
-  my $cas = $self->cascading;
-  if ($cas) {
-    $cas->run_command;
+  if ($self->cascadable) {
+    $self->cascading->run_command;
   } else {
     cliack;
   }
