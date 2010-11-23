@@ -44,8 +44,7 @@ sub new {
 }
 
 sub command_options {
-    ( (map { $_ => $_ } $_[0]->subcommands),
-      $_[0]->options );
+    ( (map { $_ => $_ } $_[0]->subcommands), $_[0]->options );
 }
 
 # XXX:

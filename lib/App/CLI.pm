@@ -101,13 +101,20 @@ sub new {
 sub prepare {
     my $class = shift;
     my $data = {};
-    $class->_getopt( [qw(no_ignore_case bundling pass_through)],
-		     _opt_map($data, $class->global_options));
+
+    $class->_getopt(
+        [qw(no_ignore_case bundling pass_through)],
+        _opt_map($data, $class->global_options)
+    );
+
     my $cmd = shift @ARGV;
     $cmd = $class->get_cmd($cmd, @_, %$data);
 
-    $class->_getopt( [qw(no_ignore_case bundling)],
-		     _opt_map($cmd, $cmd->command_options) );
+    $class->_getopt(
+        [qw(no_ignore_case bundling)],
+		_opt_map($cmd, $cmd->command_options)
+    );
+
     return $cmd;
 }
 

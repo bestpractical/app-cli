@@ -3,8 +3,10 @@ use strict;
 use base 'MyApp';
 
 use constant subcommands => qw(hate Cascading);
-use constant options => ( 'v|verbose' => 'verbose',
-			);
+use constant options => (
+    'v|verbose' => 'verbose',
+    "name=s"    => "name",
+);
 use CLITest;
 
 sub run {
@@ -27,17 +29,16 @@ sub run {
 }
 
 package MyApp::Test::Cascading::Infinite::Subcommands;
-use base qw(App::CLI::Command);
+use base qw(App::CLI App::CLI::Command);
 use CLITest;
 
-use constant options => qw(
+use constant options => (
     "h|help" => "help",
-    "name"   => "name",
 );
 
 sub run {
   my $self = shift;
-  cliack;
+  cliack($self->{name});
 }
 
 package MyApp::Test::Cascading::Infinite;
