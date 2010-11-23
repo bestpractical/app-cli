@@ -70,7 +70,7 @@ sub subcommand {
         last;
       }
     }
-)
+}
 
 sub cascading {
   my $self = shift;
