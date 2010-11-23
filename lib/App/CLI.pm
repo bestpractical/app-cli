@@ -58,9 +58,7 @@ use constant options => ();
 
 sub new {
     my $class = shift;
-    my $self = bless {}, $class;
-    %$self = @_;
-    return $self;
+    bless {@_}, $class;
 }
 
 sub prepare {
