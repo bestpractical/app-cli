@@ -112,7 +112,7 @@ sub prepare {
 
     $class->_getopt(
         [qw(no_ignore_case bundling)],
-		_opt_map($cmd, $cmd->command_options)
+	_opt_map($cmd, $cmd->command_options)
     );
 
     return $cmd;

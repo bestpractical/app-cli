@@ -73,15 +73,23 @@ sub subcommand {
 
 sub cascading {
   my $self = shift;
-  for ($self->subcommands) {
-    no strict "refs";
-    if (ucfirst($ARGV[0]) eq $_ && exists ${ref($self)."::"}{$_."::"}) {
-      shift @ARGV;
-      my %data = %{$self};
-      return bless {%data}, ref($self)."::".ucfirst($_);
-    }
+  if ($self->cascadable) {
+    my $subcmd = shift @ARGV;
+    my %data = %{$self};
+    return bless {%data}, ref($self)."::".ucfirst($subcmd);
   }
   return undef;
+}
+
+sub cascadable {
+  my $self = shift;
+  for ($self->subcommands) {
+    no strict 'refs';
+    if (ucfirst($ARGV[0]) eq $_ && exists ${ref($self)."::"}{$_."::"}) {
+      return 1;
+    }
+  }
+  return undef
 }
 
 sub app {
