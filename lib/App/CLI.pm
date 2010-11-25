@@ -11,11 +11,13 @@ App::CLI - Dispatcher module for command line interface programs
 
     package MyApp;
     use base 'App::CLI';        # the DISPATCHER of your App
-                                # it's not necessary putting the dispather on the top level of your App
+                                # it's not necessary putting the dispather
+                                #  on the top level of your App
 
     package main;
 
     MyApp->dispatch;            # call dispather in where you want
+
 
     package MyApp::List;
     use base qw(App::CLI::Command); # any (SUB)COMMAND of your App
@@ -26,7 +28,9 @@ App::CLI - Dispatcher module for command line interface programs
         'n|name=s'  => 'name',
     );
 
-    use constant subcommands => qw(User Nickname); # if you want subcommands
+    use constant subcommands => qw(User Nickname type); # if you want subcommands
+                                                        # automatically dispatch to subcommands 
+                                                        # when invoke $ myapp list [user|nickname]
 
     sub run {
         my ($self, @args) = @_;
@@ -38,30 +42,41 @@ App::CLI - Dispatcher module for command line interface programs
             # if $ myapp list --help or $ $ myapp list -h
             # just only output PODs
         } else {
-            if ($self->cascadable) {
-                $self->cascading->run_command; # if you want to invoke MyApp::List::User or MyApp::List::Nickname
-            } else {
-                # do something that without subcommand
-                # or die as below
-                $self->error_cmd;
-            }
+            # do something when imvoking $ my app list 
+            # without subcommand and --help
         }
     }
 
+
     package MyApp::List::User;
     use base qw(App::CLI::Command);
+    use constant options => (
+        "h|help"  =>  "help",
+    );
 
     sub run {
         my ($self,@args) = @_;
         # code for listing user
     }
 
+
     pakcage MyApp::List::Nickname;
     use base qw(App::CLI::Command);
+    use constant options => (
+        "sort=s"  =>  "sort",
+    );
 
     sub run {
         my ($self,@args) = @_;
         # code for listing nickname
+    }
+
+    package MyApp::List::type;   # old genre of subcommand could not be cascading infinitely
+    use base qw(MyApp::List);    # should inherit its parents command
+
+    sub run {
+        my ($self, @args);
+        # run to here when invoking $ myapp list --type 
     }
 
 
