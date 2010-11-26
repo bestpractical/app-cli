@@ -58,6 +58,12 @@ sub run_command {
     $self->run(@_);
 }
 
+=head3 subcommand()
+
+    make $self become subcommand of old genre of $self;o
+
+=cut
+
 sub subcommand {
     my $self = shift;
     my @cmd = $self->subcommands;

@@ -121,8 +121,7 @@ sub prepare {
         _opt_map($data, $class->global_options)
     );
 
-    my $cmd = shift @ARGV;
-    $cmd = $class->get_cmd($cmd, @_, %$data);
+    my $cmd = $class->get_cmd(shift @ARGV, @_, %$data);
 
     while ($cmd->cascadable) {
       $cmd = $cmd->cascading;
@@ -130,8 +129,10 @@ sub prepare {
 
     $class->_getopt(
         [qw(no_ignore_case bundling)],
-	_opt_map($cmd, $cmd->command_options)
+        _opt_map($cmd, $cmd->command_options)
     );
+
+    $cmd->subcommand;
 
     return $cmd;
 }
@@ -147,10 +148,16 @@ sub _getopt {
 	unless $p->getoptions(@_);
 }
 
+
+sub _opt_map {
+    my ($self, %opt) = @_;
+    return map { $_ => ref($opt{$_}) ? $opt{$_} : \$self->{$opt{$_}}} keys %opt;
+}
+
+
 sub dispatch {
     my $class = shift;
     my $cmd = $class->prepare(@_);
-    $cmd->subcommand;
     $cmd->run_command(@ARGV);
 }
 
@@ -190,10 +197,6 @@ sub get_cmd {
     return $cmd;
 }
 
-sub _opt_map {
-    my ($self, %opt) = @_;
-    return map { $_ => ref($opt{$_}) ? $opt{$_} : \$self->{$opt{$_}}} keys %opt;
-}
 
 sub commands {
     my $class = shift;
