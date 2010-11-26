@@ -43,8 +43,10 @@ sub new {
     bless {@_}, $class;
 }
 
+
+
 sub command_options {
-    ( (map { $_ => $_ } $_[0]->subcommands), $_[0]->options );
+    ((map { $_ => $_ } $_[0]->subcommands), $_[0]->options);
 }
 
 # XXX:
@@ -60,7 +62,7 @@ sub run_command {
 
 =head3 subcommand()
 
-    make $self become subcommand of old genre of $self;o
+    mutate $self become subcommand of old genre of $self;
 
 =cut
 
@@ -79,7 +81,7 @@ sub subcommand {
 
 =head3 cascading()
 
-return instance of subcommand invoked if it was listed in your constant subcommands.
+return instance of cascading subcommand invoked if it was listed in your constant subcommands.
 
 =cut
 

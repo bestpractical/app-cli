@@ -29,8 +29,10 @@ App::CLI - Dispatcher module for command line interface programs
     );
 
     use constant subcommands => qw(User Nickname type); # if you want subcommands
-                                                        # automatically dispatch to subcommands 
-                                                        # when invoke $ myapp list [user|nickname]
+                                                        # automatically dispatch to subcommands
+                                                        # when invoke $ myapp list [user|nickname|--type]
+                                                        # note 'type' lower case in first char
+                                                        # is subcommand of old genre which is deprecated
 
     sub run {
         my ($self, @args) = @_;
@@ -116,9 +118,9 @@ sub prepare {
     my $class = shift;
     my $data = {};
 
-    $class->_getopt(
+    $class->get_opt(
         [qw(no_ignore_case bundling pass_through)],
-        _opt_map($data, $class->global_options)
+        opt_map($data, $class->global_options)
     );
 
     my $cmd = $class->get_cmd(shift @ARGV, @_, %$data);
@@ -127,9 +129,9 @@ sub prepare {
       $cmd = $cmd->cascading;
     }
 
-    $class->_getopt(
+    $class->get_opt(
         [qw(no_ignore_case bundling)],
-        _opt_map($cmd, $cmd->command_options)
+        opt_map($cmd, $cmd->command_options)
     );
 
     $cmd->subcommand;
@@ -137,31 +139,48 @@ sub prepare {
     return $cmd;
 }
 
-sub _getopt {
+sub get_opt {
     my $class = shift;
     my $config = shift;
     my $p = Getopt::Long::Parser->new;
     $p->configure(@$config);
     my $err = '';
-    local $SIG{__WARN__} = sub { my $msg = shift; $err .= "$msg" };
-    die $class->error_opt ($err)
-	unless $p->getoptions(@_);
+    local $SIG{__WARN__} = sub { 
+      my $msg = shift;
+      $err .= "$msg"
+    };
+    die $class->error_opt ($err) unless $p->getoptions(@_);
 }
 
 
-sub _opt_map {
+sub opt_map {
     my ($self, %opt) = @_;
     return map { $_ => ref($opt{$_}) ? $opt{$_} : \$self->{$opt{$_}}} keys %opt;
 }
 
+=head3
+
+interface of dispatcher
+
+=cut
 
 sub dispatch {
     my $class = shift;
-    my $cmd = $class->prepare(@_);
-    $cmd->run_command(@ARGV);
+    $class->prepare(@_)->run_command(@ARGV);
 }
 
-sub _cmd_map {
+
+=head3 cmd_map($cmd)
+
+find package name of subcommand in constant %alias
+
+if it's finded, return ucfirst of the package name,
+
+otherwise, return ucfirst of $cmd itself.
+
+=cut
+
+sub cmd_map {
     my ($pkg, $cmd) = @_;
     my %alias = $pkg->alias;
     $cmd = $alias{$cmd} if exists $alias{$cmd};
@@ -174,28 +193,36 @@ sub error_cmd {
 
 sub error_opt { $_[1] }
 
-sub command_class { $_[0] }
+=head3 get_cmd($cmd, @arg)
+
+return subcommand of first level via $ARGV[0]
+
+=cut
 
 sub get_cmd {
     my ($class, $cmd, @arg) = @_;
-    die $class->error_cmd
-	unless $cmd && $cmd =~ m/^[?a-z]+$/;
-    my $pkg = join('::', $class->command_class, $class->_cmd_map ($cmd));
+    die $class->error_cmd unless $cmd && $cmd =~ m/^[?a-z]+$/;
 
+    my $pkg = join('::', $class, $class->cmd_map($cmd));
     my $file = "$pkg.pm";
     $file =~ s!::!/!g;
-    eval {require $file; };
+    eval { require $file; };
 
     unless ($pkg->can('run')) {
-        warn $@ if $@ and exists $INC{$file};
-        die $class->error_cmd;
+      warn $@ if $@ and exists $INC{$file};
+      die $class->error_cmd;
+    } else {
+      $cmd = $pkg->new(@arg);
+      $cmd->app($class);
+      return $cmd;
     }
-
-    $cmd = $pkg->new (@arg);
-    $cmd->app ($class);
-
-    return $cmd;
 }
+
+=head3 commands()
+
+
+
+=cut
 
 
 sub commands {
@@ -205,6 +232,12 @@ sub commands {
     $dir =~ s/\.pm$//;
     return sort map { ($_) = m{^\Q$dir\E/(.*)\.pm}; lc($_) } $class->files;
 }
+
+=head3 files()
+
+return module files of subcommans of first level
+
+=cut
 
 sub files {
     my $class = shift;
