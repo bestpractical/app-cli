@@ -129,6 +129,7 @@ sub prepare {
       $cmd = $cmd->cascading;
     }
 
+
     $class->get_opt(
         [qw(no_ignore_case bundling)],
         opt_map($cmd, $cmd->command_options)
@@ -234,8 +235,9 @@ sub get_cmd {
 
 sub commands {
     my $class = shift;
-    $class =~ s{::}{/}g;
-    my $dir = $INC{$class.'.pm'};
+    my $dir = ref($class) ? ref($class) : $class;
+    $dir =~ s{::}{/}g;
+    $dir = $INC{$dir.'.pm'};
     $dir =~ s/\.pm$//;
     return sort map { ($_) = m{^\Q$dir\E/(.*)\.pm}; lc($_) } $class->files;
 }
@@ -248,6 +250,7 @@ return module files of subcommans of first level
 
 sub files {
     my $class = shift;
+    $class = ref($class) if ref($class);
     $class =~ s{::}{/}g;
     my $dir = $INC{$class.'.pm'};
     $dir =~ s/\.pm$//;

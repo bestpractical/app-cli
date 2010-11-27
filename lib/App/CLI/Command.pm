@@ -97,7 +97,7 @@ sub cascading {
 
 =head3 cascadable()
 
-return 1 if the subcommand invoked is in you constant subcommands
+return package name of subcommand if the subcommand invoked is in you constant subcommands
 
 otherwise, return undef
 
@@ -107,12 +107,33 @@ sub cascadable {
   my $self = shift;
   for ($self->subcommands) {
     no strict 'refs';
+    my $sub = ref($self)."::$_";
+    eval "require $sub";
     if (ucfirst($ARGV[0]) eq $_ && exists ${ref($self)."::"}{$_."::"}) {
-      return 1;
+      return ref($self)."::".$_;
     }
   }
   return undef
 }
+
+sub commands {
+    my $class = shift;
+    my $dir = ref($class) ? ref($class) : $class;
+    $dir =~ s{::}{/}g;
+    $dir = $INC{$dir.'.pm'};
+    $dir =~ s/\.pm$//;
+    return sort map { ($_) = m{^\Q$dir\E/(.*)\.pm}; lc($_) } $class->files;
+}
+
+sub files {
+    my $class = shift;
+    $class = ref($class) if ref($class);
+    $class =~ s{::}{/}g;
+    my $dir = $INC{$class.'.pm'};
+    $dir =~ s/\.pm$//;
+    return sort glob("$dir/*.pm");
+}
+
 
 sub app {
     my $self = shift;
