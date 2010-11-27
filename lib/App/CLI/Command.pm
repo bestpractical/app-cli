@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Locale::Maketext::Simple;
 use Carp ();
+use App::CLI::Helper;
 
 =head1 NAME
 
@@ -115,25 +116,6 @@ sub cascadable {
   }
   return undef
 }
-
-sub commands {
-    my $class = shift;
-    my $dir = ref($class) ? ref($class) : $class;
-    $dir =~ s{::}{/}g;
-    $dir = $INC{$dir.'.pm'};
-    $dir =~ s/\.pm$//;
-    return sort map { ($_) = m{^\Q$dir\E/(.*)\.pm}; lc($_) } $class->files;
-}
-
-sub files {
-    my $class = shift;
-    $class = ref($class) if ref($class);
-    $class =~ s{::}{/}g;
-    my $dir = $INC{$class.'.pm'};
-    $dir =~ s/\.pm$//;
-    return sort glob("$dir/*.pm");
-}
-
 
 sub app {
     my $self = shift;
