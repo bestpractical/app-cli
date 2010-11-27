@@ -139,6 +139,12 @@ sub prepare {
     return $cmd;
 }
 
+=head3 get_opt([@config], %opt_map)
+
+    give options map, process by Getopt::Long::Parser
+
+=cut
+
 sub get_opt {
     my $class = shift;
     my $config = shift;
@@ -157,6 +163,7 @@ sub opt_map {
     my ($self, %opt) = @_;
     return map { $_ => ref($opt{$_}) ? $opt{$_} : \$self->{$opt{$_}}} keys %opt;
 }
+
 
 =head3
 
