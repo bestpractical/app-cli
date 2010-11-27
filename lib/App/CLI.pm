@@ -228,9 +228,6 @@ sub get_cmd {
     }
 }
 
-=head1 TODO
-
-More documentation
 
 =head1 SEE ALSO
 

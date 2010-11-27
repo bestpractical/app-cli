@@ -88,12 +88,13 @@ return instance of cascading subcommand invoked if it was listed in your constan
 
 sub cascading {
   my $self = shift;
-  if ($self->cascadable) {
-    my $subcmd = shift @ARGV;
+  if (my $subcmd = $self->cascadable) {
+    shift @ARGV;
     my %data = %{$self};
-    return bless {%data}, ref($self)."::".ucfirst($subcmd);
+    return bless {%data}, $subcmd;
+  } else {
+    die $self->error_cmd;
   }
-  return undef;
 }
 
 =head3 cascadable()
@@ -108,8 +109,7 @@ sub cascadable {
   my $self = shift;
   for ($self->subcommands) {
     no strict 'refs';
-    my $sub = ref($self)."::$_";
-    eval "require $sub";
+    eval "require ".ref($self)."::$_";
     if (ucfirst($ARGV[0]) eq $_ && exists ${ref($self)."::"}{$_."::"}) {
       return ref($self)."::".$_;
     }
@@ -218,9 +218,6 @@ sub filename {
     return $INC{"$fname.pm"};
 }
 
-=head1 TODO
-
-More documentation
 
 =head1 SEE ALSO
 
