@@ -137,7 +137,7 @@ sub prepare {
         opt_map($cmd, $cmd->command_options)
     );
 
-    $cmd->subcommand;
+    $cmd = $cmd->subcommand;
 
     return $cmd;
 }

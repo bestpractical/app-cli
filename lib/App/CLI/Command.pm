@@ -71,13 +71,16 @@ sub subcommand {
     my $self = shift;
     my @cmd = $self->subcommands;
     @cmd = values %{{$self->options}} if @cmd && $cmd[0] eq '*';
+    my $subcmd = undef;
     for (grep {$self->{$_}} @cmd) {
       no strict 'refs';
       if (exists ${ref($self).'::'}{$_.'::'}) {
-	    bless ($self, (ref($self)."::$_"));
+        my %data = %{$self};
+	$subcmd = bless ({%data}, (ref($self)."::$_"));
         last;
       }
     }
+    $subcmd ? $subcmd : $self;
 }
 
 =head3 cascading()
