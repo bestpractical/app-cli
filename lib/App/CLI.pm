@@ -176,7 +176,7 @@ interface of dispatcher
 
 sub dispatch {
     my $class = shift;
-    $class->prepare(@_)->run_command(@ARGV);
+    $class->prepare(@_)->run_command(@_);
 }
 
 
