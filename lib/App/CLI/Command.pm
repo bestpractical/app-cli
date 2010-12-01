@@ -63,7 +63,7 @@ sub run_command {
 
 =head3 subcommand()
 
-    mutate $self become subcommand of old genre of $self;
+    return old genre subcommand of $self;
 
 =cut
 
