@@ -2,7 +2,6 @@ Changes
 MANIFEST			This list of files
 META.yml
 Makefile.PL
-SIGNATURE
 inc/Module/AutoInstall.pm
 inc/Module/Install.pm
 inc/Module/Install/AutoInstall.pm
